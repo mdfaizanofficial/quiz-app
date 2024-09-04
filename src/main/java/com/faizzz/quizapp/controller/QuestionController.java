@@ -28,4 +28,5 @@ public class QuestionController {
     public ResponseEntity<List<Question>> getQuestionsUsingCaregory(@RequestParam String category){
         return questionService.getQuestionsUsingCaregory(category);
     }
+    
 }
