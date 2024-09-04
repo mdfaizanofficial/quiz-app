@@ -35,4 +35,14 @@ public class QuestionService {
         }
 
     }
+
+    public ResponseEntity<List<Question>> getQuestionsUsingCaregory(String category) {
+        try {
+            List<Question> questions = questionRepo.findQuestionsUsingCategory(category);
+            return new ResponseEntity<>(questions,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

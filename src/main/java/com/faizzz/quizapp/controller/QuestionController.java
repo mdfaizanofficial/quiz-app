@@ -1,5 +1,4 @@
 package com.faizzz.quizapp.controller;
-
 import com.faizzz.quizapp.model.Question;
 import com.faizzz.quizapp.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +14,18 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
-
     @GetMapping("/allQuestions")
-    public ResponseEntity<List<Question>> getAllQuestion(){
+    public ResponseEntity<List<Question>> getAllQuestion() {
         return questionService.getAllQuestion();
     }
 
     @PostMapping("/addQuestion")
-    public ResponseEntity<String> addQuestion(@RequestBody Question question){
+    public ResponseEntity<String> addQuestion(@RequestBody Question question) {
         return questionService.addQuestion(question);
     }
 
-//    public ResponseEntity<List<Question>> getQuestion
+    @GetMapping("/getQuestionsUsingCategory")
+    public ResponseEntity<List<Question>> getQuestionsUsingCaregory(@RequestParam String category){
+        return questionService.getQuestionsUsingCaregory(category);
+    }
 }
