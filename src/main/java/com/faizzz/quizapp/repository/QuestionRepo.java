@@ -5,18 +5,16 @@ import com.faizzz.quizapp.model.Question;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface QuestionRepo extends JpaRepository<Question, Integer> {
 
-    @Query("SELECT q FROM Question q WHERE q.category = :category")
-    public List<Question> findQuestionsUsingCategory(@Param("category") String category);
+    public List<Question> findQuestionsByCategory(String category);
 
     @Query(
             value = "SELECT * FROM question q WHERE q.category=:category ORDER BY RAND() LIMIT :numQ",
             nativeQuery = true
     )
-    List<Question> getRandomQuestionUsingCategory(String category, int numQ);
+    List<Question> findRandomQuestionByCategory(String category, int numQ);
 }
