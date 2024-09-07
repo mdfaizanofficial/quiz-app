@@ -38,7 +38,7 @@ public class QuestionService {
 
     public ResponseEntity<List<Question>> getQuestionsUsingCaregory(String category) {
         try {
-            List<Question> questions = questionRepo.findQuestionsUsingCategory(category);
+            List<Question> questions = questionRepo.findQuestionsByCategory(category);
             return new ResponseEntity<>(questions,HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
