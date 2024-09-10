@@ -1,8 +1,8 @@
 package com.faizzz.quizapp.service;
 
+import com.faizzz.quizapp.dto.QuizDTO;
 import com.faizzz.quizapp.model.Question;
 import com.faizzz.quizapp.model.Quiz;
-import com.faizzz.quizapp.model.ShowQuiz;
 import com.faizzz.quizapp.repository.QuestionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,33 +38,35 @@ public class QuizService {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
 
-    public ResponseEntity<List<ShowQuiz>> getQuizByTitle(Integer id) {
-        try {
-            Optional<Quiz> quizDb = quizRepo.findById(id);
+    public ResponseEntity<List<QuizDTO>> getQuizById(Integer id) {
+        try{
 
-            List<Question> questions = quizDb.get().getQuestions();
-            List<ShowQuiz> showQuiz = new ArrayList<>();
+        Optional<Quiz> quiz = quizRepo.findById(id);
 
-            for(Question question : questions){
-                ShowQuiz quiz = new ShowQuiz();
-                quiz.setId(question.getId());
-                quiz.setQuestionTitle(question.getQuestionTitle());
-                quiz.setOption1(question.getOption1());
-                quiz.setOption2(question.getOption2());
-                quiz.setOption3(question.getOption3());
-                quiz.setOption4(question.getOption4());
-                showQuiz.add(quiz);
-            }
+        List<QuizDTO> quizDTOList = new ArrayList<>();
 
-            return new ResponseEntity<>(showQuiz, HttpStatus.FOUND);
+        List<Question> questions = quiz.get().getQuestions();
+
+        int quizQuestionId = 1;
+        for(Question question : questions){
+            QuizDTO quizDTO = new QuizDTO(
+                    quizQuestionId++,
+                    question.getQuestionTitle(),
+                    question.getOption1(),
+                    question.getOption2(),
+                    question.getOption3(),
+                    question.getOption4()
+            );
+
+            quizDTOList.add(quizDTO);
+        }
+
+        return new ResponseEntity<>(quizDTOList,HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    
-
 }

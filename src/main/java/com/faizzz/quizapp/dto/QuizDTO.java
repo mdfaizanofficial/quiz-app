@@ -1,11 +1,11 @@
-package com.faizzz.quizapp.model;
+package com.faizzz.quizapp.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
-public class ShowQuiz {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class QuizDTO {
     
     private int id;
     private String questionTitle;
